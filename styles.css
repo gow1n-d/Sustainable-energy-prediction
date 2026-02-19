@@ -1,0 +1,114 @@
+/* ═══════════════════════════════════════════════════════════════
+   Renewable Energy Dashboard — Premium Dark Theme
+   ═══════════════════════════════════════════════════════════════ */
+:root{
+  --bg:        #0b0f19;
+  --bg-card:   #111827;
+  --bg-alt:    #0f1525;
+  --surface:   #1e293b;
+  --border:    #1e293b;
+  --text:      #e2e8f0;
+  --text-dim:  #94a3b8;
+  --accent:    #38bdf8;
+  --accent2:   #a78bfa;
+  --solar:     #FFB300;
+  --wind:      #1E88E5;
+  --hydro:     #43A047;
+  --biomass:   #8E24AA;
+  --geo:       #E53935;
+  --radius:    16px;
+  --shadow:    0 4px 30px rgba(0,0,0,.45);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  font-family:'Inter',system-ui,sans-serif;
+  background:var(--bg);color:var(--text);
+  line-height:1.6;overflow-x:hidden;
+}
+.container{max-width:1200px;margin:0 auto;padding:0 24px}
+
+/* ── Hero ──────────────────────────────────────────────────── */
+.hero{
+  position:relative;padding:100px 0 70px;text-align:center;overflow:hidden;
+}
+.hero-glow{
+  position:absolute;top:-120px;left:50%;transform:translateX(-50%);
+  width:700px;height:700px;border-radius:50%;
+  background:radial-gradient(circle,rgba(56,189,248,.15),transparent 70%);
+  pointer-events:none;animation:pulse 6s ease-in-out infinite;
+}
+@keyframes pulse{0%,100%{opacity:.6;transform:translateX(-50%) scale(1)}50%{opacity:1;transform:translateX(-50%) scale(1.15)}}
+.hero-tag{font-size:.85rem;letter-spacing:2px;text-transform:uppercase;color:var(--accent);margin-bottom:12px}
+.hero h1{font-size:clamp(2rem,5vw,3.6rem);font-weight:800;line-height:1.15;margin-bottom:18px}
+.gradient-text{background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{max-width:600px;margin:0 auto 28px;color:var(--text-dim);font-size:1.05rem}
+.hero-pills{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.pill{padding:6px 16px;border-radius:999px;font-size:.8rem;font-weight:600;background:var(--surface);border:1px solid var(--border)}
+.pill-solar{color:var(--solar);border-color:var(--solar)}
+.pill-wind{color:var(--wind);border-color:var(--wind)}
+.pill-hydro{color:var(--hydro);border-color:var(--hydro)}
+.pill-biomass{color:var(--biomass);border-color:var(--biomass)}
+.pill-geo{color:var(--geo);border-color:var(--geo)}
+
+/* ── Sections ──────────────────────────────────────────────── */
+.section{padding:70px 0}
+.section-alt{background:var(--bg-alt)}
+.section-title{text-align:center;font-size:1.8rem;font-weight:700;margin-bottom:40px;position:relative}
+.section-title::after{content:'';display:block;width:60px;height:4px;border-radius:2px;background:linear-gradient(90deg,var(--accent),var(--accent2));margin:12px auto 0}
+
+/* ── KPI Cards ─────────────────────────────────────────────── */
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+.kpi-card{
+  background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+  padding:28px 24px;text-align:center;transition:transform .25s,box-shadow .25s;
+}
+.kpi-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.kpi-icon{font-size:2rem;margin-bottom:8px}
+.kpi-val{font-size:2rem;font-weight:800;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.kpi-label{color:var(--text-dim);font-size:.85rem;margin-top:4px}
+
+/* ── Cleaning Cards ────────────────────────────────────────── */
+.clean-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:20px}
+.clean-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:28px 24px;transition:transform .25s,box-shadow .25s}
+.clean-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.clean-icon{font-size:2rem;margin-bottom:8px}
+.clean-card h3{font-size:1.05rem;margin-bottom:8px;color:var(--accent)}
+.clean-card p{color:var(--text-dim);font-size:.88rem}
+
+/* ── Chart Cards ───────────────────────────────────────────── */
+.chart-row{display:grid;grid-template-columns:repeat(auto-fit,minmax(420px,1fr));gap:24px;margin-bottom:24px}
+.chart-card{background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);padding:28px;box-shadow:var(--shadow)}
+.chart-card h3{font-size:1.05rem;margin-bottom:16px;color:var(--text)}
+.chart-wide{grid-column:1/-1}
+canvas{width:100%!important;max-height:400px}
+
+/* ── Heatmap ───────────────────────────────────────────────── */
+.heatmap-container{overflow-x:auto}
+.heatmap-table{border-collapse:collapse;width:100%;font-size:.82rem}
+.heatmap-table th,.heatmap-table td{padding:10px 14px;text-align:center;border:1px solid var(--border);white-space:nowrap}
+.heatmap-table th{background:var(--surface);color:var(--accent);font-weight:600;position:sticky;top:0}
+
+/* ── Stats Table ───────────────────────────────────────────── */
+.table-wrap{overflow-x:auto;border-radius:var(--radius);border:1px solid var(--border)}
+table{width:100%;border-collapse:collapse;font-size:.85rem}
+th,td{padding:12px 16px;text-align:right;border-bottom:1px solid var(--border)}
+th{background:var(--surface);color:var(--accent);font-weight:600;position:sticky;top:0}
+td:first-child,th:first-child{text-align:left;font-weight:600;color:var(--text)}
+tbody tr:hover{background:rgba(56,189,248,.06)}
+
+/* ── Insights ──────────────────────────────────────────────── */
+.insights-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px}
+.insight-card{background:var(--bg-card);border-left:4px solid var(--accent);border-radius:var(--radius);padding:24px 24px 24px 28px;transition:transform .25s,box-shadow .25s}
+.insight-card:hover{transform:translateY(-4px);box-shadow:var(--shadow)}
+.insight-card h4{color:var(--accent);margin-bottom:8px;font-size:1rem}
+.insight-card p{color:var(--text-dim);font-size:.9rem}
+
+/* ── Footer ────────────────────────────────────────────────── */
+.footer{padding:32px 0;text-align:center;color:var(--text-dim);font-size:.82rem;border-top:1px solid var(--border)}
+
+/* ── Responsive ────────────────────────────────────────────── */
+@media(max-width:640px){
+  .chart-row{grid-template-columns:1fr}
+  .hero h1{font-size:2rem}
+}

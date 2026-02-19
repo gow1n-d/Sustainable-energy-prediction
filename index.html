@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="OPSD Renewable Power Plants Dashboard — Real data from 193,752 power plants across Europe.">
+  <title>OPSD Renewable Energy Analytics Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap"
+    rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <header class="hero" id="hero">
+    <div class="hero-glow"></div>
+    <div class="container">
+      <p class="hero-tag">⚡ Open Power System Data (OPSD)</p>
+      <h1>European Renewable Energy<br><span class="gradient-text">Analytics Dashboard</span></h1>
+      <p class="hero-sub">193,752 real power plants · 6 countries · 2 decades of renewable energy data — cleaned,
+        preprocessed &amp; visualised.</p>
+      <div class="hero-pills">
+        <span class="pill pill-solar">☀️ Solar</span>
+        <span class="pill pill-wind">💨 Wind</span>
+        <span class="pill pill-hydro">💧 Hydro</span>
+        <span class="pill pill-biomass">🌿 Bioenergy</span>
+        <span class="pill pill-geo">🌋 Geothermal</span>
+      </div>
+    </div>
+  </header>
+
+  <section class="section" id="kpi-section">
+    <div class="container">
+      <h2 class="section-title">Key Performance Indicators</h2>
+      <div class="kpi-grid" id="kpi-grid"></div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="cleaning-section">
+    <div class="container">
+      <h2 class="section-title">Data Cleaning &amp; Preprocessing</h2>
+      <div class="clean-grid">
+        <div class="clean-card">
+          <div class="clean-icon">📂</div>
+          <h3>Multi-Source Merge</h3>
+          <p>7 country CSV files (CH, CZ, DK, FR, PL, SE, UK) merged on common columns. 193,752 plant records combined.
+          </p>
+        </div>
+        <div class="clean-card">
+          <div class="clean-icon">🗓️</div>
+          <h3>Date Standardisation</h3>
+          <p>51,833 missing commissioning dates filled via country-group median imputation. All dates normalised to ISO
+            8601.</p>
+        </div>
+        <div class="clean-card">
+          <div class="clean-icon">🔢</div>
+          <h3>Missing Value Treatment</h3>
+          <p>191,298 missing energy_source_level_3 entries and 2,315 missing technology values handled and categorised.
+          </p>
+        </div>
+        <div class="clean-card">
+          <div class="clean-icon">📏</div>
+          <h3>Scaling &amp; Encoding</h3>
+          <p>Electrical capacity MinMax-scaled to [0,1]. Energy source, country, and technology label-encoded for ML
+            readiness.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="charts-section">
+    <div class="container">
+      <h2 class="section-title">Trend Analysis &amp; Visualisations</h2>
+      <div class="chart-row">
+        <div class="chart-card chart-wide" id="line-card">
+          <h3>Germany — Renewable Capacity Growth (2000–2020)</h3>
+          <canvas id="lineChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-card" id="bar-source-card">
+          <h3>Total Installed Capacity by Source (MW)</h3>
+          <canvas id="barSourceChart"></canvas>
+        </div>
+        <div class="chart-card" id="bar-country-card">
+          <h3>Total Installed Capacity by Country (MW)</h3>
+          <canvas id="barCountryChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-card chart-wide" id="commissioning-card">
+          <h3>Yearly Renewable Commissioning Trend (1990–2020)</h3>
+          <canvas id="commissionChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-card" id="pie-card">
+          <h3>Plants Distribution by Country</h3>
+          <canvas id="pieChart"></canvas>
+        </div>
+        <div class="chart-card" id="tech-card">
+          <h3>Top Technologies by Plant Count</h3>
+          <canvas id="techChart"></canvas>
+        </div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-card chart-wide" id="heatmap-card">
+          <h3>Germany — Source Capacity Correlation</h3>
+          <div class="heatmap-container" id="heatmapContainer"></div>
+        </div>
+      </div>
+      <div class="chart-row">
+        <div class="chart-card chart-wide" id="source-country-card">
+          <h3>Installed Capacity — Source × Country (MW)</h3>
+          <div class="heatmap-container" id="sourceCountryHeatmap"></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section-alt" id="stats-section">
+    <div class="container">
+      <h2 class="section-title">Descriptive Statistics — Electrical Capacity (MW)</h2>
+      <div class="table-wrap">
+        <table id="statsTable">
+          <thead></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- Predictions Section -->
+  <section class="section" id="predictions-section">
+    <div class="container">
+      <h2 class="section-title">🔮 Capacity Predictions to 2030</h2>
+      <p style="text-align:center;color:var(--text-dim);margin:-20px 0 30px;font-size:.95rem">Polynomial regression
+        models (R² > 0.83) fitted on 2000–2020 data, projecting installed capacity growth.</p>
+
+      <div class="chart-row">
+        <div class="chart-card chart-wide" id="pred-de-card">
+          <h3>Germany — Renewable Capacity Forecast (2000–2030)</h3>
+          <canvas id="predDEChart"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card" id="pred-multi-card">
+          <h3>Multi-Country Wind Forecast to 2030</h3>
+          <canvas id="predMultiChart"></canvas>
+        </div>
+        <div class="chart-card" id="pred-compare-card">
+          <h3>2020 Actual vs 2030 Predicted (MW)</h3>
+          <canvas id="predCompareChart"></canvas>
+        </div>
+      </div>
+
+      <div class="chart-row">
+        <div class="chart-card chart-wide" id="pred-table-card">
+          <h3>Prediction Summary Table</h3>
+          <div class="table-wrap">
+            <table id="predTable">
+              <thead></thead>
+              <tbody></tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" id="insights-section">
+    <div class="container">
+      <h2 class="section-title">Key Insights</h2>
+      <div class="insights-grid" id="insights-grid"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <p>OPSD Renewable Energy Dashboard &copy; 2026 &mdash; Data: <a href="https://data.open-power-system-data.org"
+          style="color:var(--accent)">Open Power System Data</a> | Cleaned &amp; visualised with Python, pandas &amp;
+        Chart.js</p>
+    </div>
+  </footer>
+  <script src="app.js"></script>
+</body>
+
+</html>
